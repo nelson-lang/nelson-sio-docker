@@ -8,15 +8,15 @@ See the Docker Hub page for the full readme on how to use this Docker image and 
 
  ## build docker
 ```bash
-docker build -t nelson-sio .
+docker build -t nelson-sio-cli .
 ```
 
 ## download nelson image
 ```bash
-docker pull nelsonsoftware/nelson-sio
+docker pull nelsonsoftware/nelson-sio-cli
 ```
 
  ## run docker
 ```bash
-docker run -ti nelson-sio
+docker run -ti nelson-sio-cli
 ```
