@@ -56,18 +56,28 @@ RUN rm -rf /var/lib/apt/lists/*
 RUN git clone https://github.com/eigenteam/eigen-git-mirror /tmp/eigen
 RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.4 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
 
-
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git
 WORKDIR "/nelson"
 RUN git checkout nelson_sio
+
+
+RUN groupadd -g 999 nelsonuser && \
+    useradd -r -u 999 -g nelsonuser nelsonuser
+
+RUN chown -R nelsonuser:nelsonuser /nelson
+
+USER nelsonuser
+
 
 ENV AUDIODEV null
 
 RUN cmake -G "Unix Makefiles"
 RUN make -j4
 
+
 RUN make buildhelp
 RUN make tests_minimal
+
 
 EXPOSE 10000:20000
 
