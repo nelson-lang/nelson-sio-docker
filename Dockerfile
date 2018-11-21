@@ -50,6 +50,7 @@ RUN apt-get install -y libqt5opengl5-dev;
 RUN apt-get install -y qtbase5-private-dev;
 RUN apt-get install -y qtdeclarative5-dev;
 
+RUN mkdir /home/nelsonuser
 
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -60,14 +61,14 @@ RUN git clone https://github.com/Nelson-numerical-software/nelson.git
 WORKDIR "/nelson"
 RUN git checkout nelson_sio
 
-
 RUN groupadd -g 999 nelsonuser && \
     useradd -r -u 999 -g nelsonuser nelsonuser
+
+RUN chown -R nelsonuser:nelsonuser /home/nelsonuser
 
 RUN chown -R nelsonuser:nelsonuser /nelson
 
 USER nelsonuser
-
 
 ENV AUDIODEV null
 
