@@ -59,7 +59,6 @@ RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.4 && cd - && cd 
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git
 WORKDIR "/nelson"
-RUN git checkout nelson_sio
 
 RUN groupadd -g 999 nelsonuser && \
     useradd -r -u 999 -g nelsonuser nelsonuser
