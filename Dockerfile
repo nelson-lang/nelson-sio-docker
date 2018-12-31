@@ -37,6 +37,8 @@ RUN apt-get install -y liblapack-dev;
 RUN apt-get install -y liblapacke-dev;
 RUN apt-get install -y fftw3;
 RUN apt-get install -y fftw3-dev;
+RUN apt-get install -y libhdf5-dev;
+RUN apt-get install -y hdf5-tools;
 RUN apt-get install -y libasound-dev;
 RUN apt-get install -y portaudio19-dev;
 RUN apt-get install -y libsndfile1-dev;
