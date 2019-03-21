@@ -1,5 +1,5 @@
 #==============================================================================
-# Copyright (c) 2016-2018 Allan CORNET (Nelson)
+# Copyright (c) 2016-2019 Allan CORNET (Nelson)
 #==============================================================================
 # LICENCE_BLOCK_BEGIN
 # This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,14 @@
 # LICENCE_BLOCK_END
 #==============================================================================
 
-FROM debian:stretch
+FROM debian:buster
 MAINTAINER Allan CORNET "nelson.numerical.computation@gmail.com"
 
 RUN apt-get update
+RUN apt-get install -y build-essential;
 RUN apt-get install -y autotools-dev;
 RUN apt-get install -y libtool;
 RUN apt-get install -y automake;
-RUN apt-get install -y build-essential;
 RUN apt-get install -y xvfb;
 RUN apt-get install -y git;
 RUN apt-get install -y libboost-all-dev;
@@ -40,34 +40,33 @@ RUN apt-get install -y liblapack-dev;
 RUN apt-get install -y liblapacke-dev;
 RUN apt-get install -y fftw3;
 RUN apt-get install -y fftw3-dev;
-RUN apt-get install -y libhdf5-dev;
-RUN apt-get install -y hdf5-tools;
 RUN apt-get install -y libasound-dev;
 RUN apt-get install -y portaudio19-dev;
 RUN apt-get install -y libsndfile1-dev;
 RUN apt-get install -y libtag1-dev;
 RUN apt-get install -y alsa-utils;
-
-
-RUN apt-get install -y qtbase5-dev qtdeclarative5-dev libqt5webkit5-dev libsqlite3-dev;
+RUN apt-get install -y qtbase5-dev;
+RUN apt-get install -y qtdeclarative5-dev;
+RUN apt-get install -y libqt5webkit5-dev;
+RUN apt-get install -y libsqlite3-dev;
 RUN apt-get install -y qt5-default qttools5-dev-tools;
 RUN apt-get install -y libqt5opengl5-dev;
 RUN apt-get install -y qtbase5-private-dev;
 RUN apt-get install -y qtdeclarative5-dev;
-
-RUN mkdir /home/nelsonuser
+RUN apt-get install -y libhdf5-dev;
+RUN apt-get install -y hdf5-tools;
+RUN apt-get install -y libmatio-dev;
 
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/tbeu/matio /tmp/matio
-RUN cd /tmp/matio && git checkout v1.5.13 && cd /tmp/matio && ./autogen.sh && ./configure --enable-shared --enable-mat73=yes --enable-extended-sparse=no --with-pic && make && make install;
-
 RUN git clone https://github.com/eigenteam/eigen-git-mirror /tmp/eigen
-RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.4 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
+RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.7 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git
-RUN git checkout -b v0.3.3
 WORKDIR "/nelson"
+RUN git checkout -b v0.3.3
+
+RUN mkdir /home/nelsonuser
 
 RUN groupadd -g 999 nelsonuser && \
     useradd -r -u 999 -g nelsonuser nelsonuser
