@@ -21,6 +21,9 @@ FROM debian:stretch
 MAINTAINER Allan CORNET "nelson.numerical.computation@gmail.com"
 
 RUN apt-get update
+RUN apt-get install -y autotools-dev;
+RUN apt-get install -y libtool;
+RUN apt-get install -y automake;
 RUN apt-get install -y build-essential;
 RUN apt-get install -y xvfb;
 RUN apt-get install -y git;
@@ -56,10 +59,14 @@ RUN mkdir /home/nelsonuser
 
 RUN rm -rf /var/lib/apt/lists/*
 
+RUN git clone https://github.com/tbeu/matio /tmp/matio
+RUN cd /tmp/matio && git checkout v1.5.13 && cd /tmp/matio && ./autogen.sh && ./configure --enable-shared --enable-mat73=yes --enable-extended-sparse=no --with-pic && make && make install;
+
 RUN git clone https://github.com/eigenteam/eigen-git-mirror /tmp/eigen
 RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.4 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git
+RUN git checkout -b v0.3.3
 WORKDIR "/nelson"
 
 RUN groupadd -g 999 nelsonuser && \
