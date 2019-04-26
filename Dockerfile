@@ -59,12 +59,15 @@ RUN apt-get install -y libmatio-dev;
 
 RUN rm -rf /var/lib/apt/lists/*
 
+RUN git clone https://github.com/tbeu/matio /tmp/matio 
+RUN cd /tmp/matio && git checkout v1.5.15 && cd /tmp/matio && ./autogen.sh && ./configure --enable-shared --enable-mat73=yes --enable-extended-sparse=no --with-pic && make && make install;
+
 RUN git clone https://github.com/eigenteam/eigen-git-mirror /tmp/eigen
 RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.7 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git
 WORKDIR "/nelson"
-RUN git checkout -b v0.3.3
+RUN git checkout -b v0.3.4
 
 RUN mkdir /home/nelsonuser
 
