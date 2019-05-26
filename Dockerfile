@@ -56,6 +56,7 @@ RUN apt-get install -y qtdeclarative5-dev;
 RUN apt-get install -y libhdf5-dev;
 RUN apt-get install -y hdf5-tools;
 RUN apt-get install -y libmatio-dev;
+RUN apt-get install -y libslicot0;
 
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -68,9 +69,9 @@ RUN cd /tmp/matio && git checkout v1.5.15 && cd /tmp/matio && ./autogen.sh && ./
 RUN git clone https://github.com/eigenteam/eigen-git-mirror /tmp/eigen
 RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.7 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
 
-RUN git clone https://github.com/Nelson-numerical-software/nelson.git
+RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.3.4
+RUN git checkout -b v0.3.5
 
 RUN mkdir /home/nelsonuser
 
