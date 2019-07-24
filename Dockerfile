@@ -65,14 +65,14 @@ RUN git clone https://github.com/live-clones/hdf5.git /tmp/hdf5_1_10_5
 RUN cd /tmp/hdf5_1_10_5 && git checkout hdf5-1_10_5 && ./configure --quiet --enable-shared --disable-deprecated-symbols --disable-hl --disable-strict-format-checks --disable-memory-alloc-sanity-check --disable-instrument --disable-parallel --disable-trace --disable-asserts --with-pic --with-default-api-version=v110 CFLAGS="-w" && make install -C src
 
 RUN git clone https://github.com/tbeu/matio /tmp/matio 
-RUN cd /tmp/matio && git checkout v1.5.15 && cd /tmp/matio && ./autogen.sh && ./configure --enable-shared --enable-mat73=yes --enable-extended-sparse=no --with-pic --with-hdf5=/tmp/hdf5_1_10_5/hdf5 && make && make install;
+RUN cd /tmp/matio && git checkout v1.5.16 && cd /tmp/matio && ./autogen.sh && ./configure --enable-shared --enable-mat73=yes --enable-extended-sparse=no --with-pic --with-hdf5=/tmp/hdf5_1_10_5/hdf5 && make && make install;
 
 RUN git clone https://github.com/eigenteam/eigen-git-mirror /tmp/eigen
 RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.7 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.3.6
+RUN git checkout -b v0.3.7
 
 RUN mkdir /home/nelsonuser
 
