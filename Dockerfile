@@ -59,6 +59,7 @@ RUN apt-get install -y libmatio-dev;
 RUN apt-get install -y libslicot0;
 RUN apt-get install -y zlib1g-dev;
 RUN apt-get install -y libcurl4-openssl-dev;
+RUN apt-get install -y libgit2-dev;
 
 RUN rm -rf /var/lib/apt/lists/*
 
@@ -73,7 +74,7 @@ RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.7 && cd - && cd 
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.3.9
+RUN git checkout -b v0.3.10
 
 RUN mkdir /home/nelsonuser
 
