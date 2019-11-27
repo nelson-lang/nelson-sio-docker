@@ -74,7 +74,7 @@ RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3.7 && cd - && cd 
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.3.10
+RUN git checkout -b v0.3.11
 
 RUN mkdir /home/nelsonuser
 
@@ -92,7 +92,7 @@ ENV AUDIODEV null
 RUN cmake -G "Unix Makefiles"
 RUN make -j4
 
-
+RUN make get_module_skeleton
 RUN make buildhelp
 RUN make tests_minimal
 
