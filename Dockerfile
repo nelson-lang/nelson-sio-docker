@@ -60,6 +60,7 @@ RUN apt-get install -y libslicot0;
 RUN apt-get install -y zlib1g-dev;
 RUN apt-get install -y libcurl4-openssl-dev;
 RUN apt-get install -y libgit2-dev;
+RUN apt-get install -y libzmq3-dev;
 
 RUN rm -rf /var/lib/apt/lists/*
 
