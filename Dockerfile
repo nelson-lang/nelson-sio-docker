@@ -71,11 +71,11 @@ RUN git clone https://github.com/tbeu/matio /tmp/matio
 RUN cd /tmp/matio && git checkout v1.5.16 && cd /tmp/matio && ./autogen.sh && ./configure --enable-shared --enable-mat73=yes --enable-extended-sparse=no --with-pic --with-hdf5=/tmp/hdf5_1_10_5/hdf5 && make && make install;
 
 RUN git clone https://gitlab.com/libeigen/eigen.git /tmp/eigen
-RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
+RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.8 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.4.10
+RUN git checkout -b v0.4.11
 
 RUN mkdir /home/nelsonuser
 
