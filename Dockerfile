@@ -64,7 +64,7 @@ RUN apt-get install -y libzmq3-dev;
 
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/live-clones/hdf5.git /tmp/hdf5_1_10_5
+RUN git clone  https://github.com/HDFGroup/hdf5.git /tmp/hdf5_1_10_5
 RUN cd /tmp/hdf5_1_10_5 && git checkout hdf5-1_10_5 && ./configure --quiet --enable-shared --disable-deprecated-symbols --disable-hl --disable-strict-format-checks --disable-memory-alloc-sanity-check --disable-instrument --disable-parallel --disable-trace --disable-asserts --with-pic --with-default-api-version=v110 CFLAGS="-w" && make install -C src
 
 RUN git clone https://github.com/tbeu/matio /tmp/matio
@@ -75,7 +75,7 @@ RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3 && cd - && cd /t
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.4.11
+RUN git checkout -b v0.4.12
 
 RUN mkdir /home/nelsonuser
 
