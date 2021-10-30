@@ -17,7 +17,7 @@
 # LICENCE_BLOCK_END
 #==============================================================================
 
-FROM debian:buster
+FROM debian:buster-20210927-slim
 MAINTAINER Allan CORNET "nelson.numerical.computation@gmail.com"
 
 RUN apt-get update
