@@ -75,7 +75,7 @@ RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.4 && cd - && cd /t
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.5.11
+RUN git checkout -b v0.5.12
 
 RUN mkdir /home/nelsonuser
 
