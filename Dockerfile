@@ -17,8 +17,8 @@
 # LICENCE_BLOCK_END
 #==============================================================================
 
-FROM debian:buster-20210927-slim
-MAINTAINER Allan CORNET "nelson.numerical.computation@gmail.com"
+FROM debian:buster-slim
+LABEL maintainer="Allan CORNET nelson.numerical.computation@gmail.com"
 
 RUN apt-get update
 RUN apt-get install -y build-essential;
@@ -50,6 +50,8 @@ RUN apt-get install -y qtdeclarative5-dev;
 RUN apt-get install -y libqt5webkit5-dev;
 RUN apt-get install -y libsqlite3-dev;
 RUN apt-get install -y qt5-default qttools5-dev-tools;
+RUN apt-get install -y qml-module-qtquick-controls;
+RUN apt-get install -y qml-module-qtquick-dialogs;
 RUN apt-get install -y libqt5opengl5-dev;
 RUN apt-get install -y qtbase5-private-dev;
 RUN apt-get install -y qtdeclarative5-dev;
@@ -60,22 +62,15 @@ RUN apt-get install -y libslicot0;
 RUN apt-get install -y zlib1g-dev;
 RUN apt-get install -y libcurl4-openssl-dev;
 RUN apt-get install -y libgit2-dev;
-RUN apt-get install -y libzmq3-dev;
 
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN git clone  https://github.com/HDFGroup/hdf5.git /tmp/hdf5_1_10_5
-RUN cd /tmp/hdf5_1_10_5 && git checkout hdf5-1_10_5 && ./configure --quiet --enable-shared --disable-deprecated-symbols --disable-hl --disable-strict-format-checks --disable-memory-alloc-sanity-check --disable-instrument --disable-parallel --disable-trace --disable-asserts --with-pic --with-default-api-version=v110 CFLAGS="-w" && make install -C src
-
-RUN git clone https://github.com/tbeu/matio /tmp/matio
-RUN cd /tmp/matio && git checkout v1.5.16 && cd /tmp/matio && ./autogen.sh && ./configure --enable-shared --enable-mat73=yes --enable-extended-sparse=no --with-pic --with-hdf5=/tmp/hdf5_1_10_5/hdf5 && make && make install;
-
 RUN git clone https://gitlab.com/libeigen/eigen.git /tmp/eigen
-RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.4 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
+RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.3 && cd - && cd /tmp/eigen-build && cmake . /tmp/eigen && make -j4 && make install;
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.6.1
+RUN git checkout -b v0.6.2
 
 RUN mkdir /home/nelsonuser
 
