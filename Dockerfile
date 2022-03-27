@@ -70,7 +70,7 @@ RUN mkdir /tmp/eigen-build && cd /tmp/eigen && git checkout 3.4 && cd - && cd /t
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.6.2
+RUN git checkout -b v0.6.3
 
 RUN mkdir /home/nelsonuser
 
@@ -85,12 +85,15 @@ USER nelsonuser
 
 ENV AUDIODEV null
 
-RUN cmake -G "Unix Makefiles"
-RUN make -j4
 
-RUN make get_module_skeleton
-RUN make buildhelp
-RUN make tests_minimal
+RUN cmake -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" .
+RUN cmake --build . -- -j $(nproc)
+RUN cmake --build . -- -j $(nproc) get_module_skeleton
+
+RUN cmake --build . -- -j $(nproc) buildhelp
+RUN cmake --build . -- -j $(nproc) tests_minimal
+
+RUN xvfb-run -a /nelson/bin/linux64/nelson-adv-cli -e "doc;exit"
 
 
 EXPOSE 10000:20000
