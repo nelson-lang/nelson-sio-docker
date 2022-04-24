@@ -45,16 +45,6 @@ RUN apt-get install -y portaudio19-dev;
 RUN apt-get install -y libsndfile1-dev;
 RUN apt-get install -y libtag1-dev;
 RUN apt-get install -y alsa-utils;
-RUN apt-get install -y qtbase5-dev;
-RUN apt-get install -y qtdeclarative5-dev;
-RUN apt-get install -y libqt5webkit5-dev;
-RUN apt-get install -y libsqlite3-dev;
-RUN apt-get install -y qt5-default qttools5-dev-tools;
-RUN apt-get install -y qml-module-qtquick-controls;
-RUN apt-get install -y qml-module-qtquick-dialogs;
-RUN apt-get install -y libqt5opengl5-dev;
-RUN apt-get install -y qtbase5-private-dev;
-RUN apt-get install -y qtdeclarative5-dev;
 RUN apt-get install -y libhdf5-dev;
 RUN apt-get install -y hdf5-tools;
 RUN apt-get install -y libmatio-dev;
@@ -62,6 +52,18 @@ RUN apt-get install -y libslicot0;
 RUN apt-get install -y zlib1g-dev;
 RUN apt-get install -y libcurl4-openssl-dev;
 RUN apt-get install -y libgit2-dev;
+RUN apt-get install -y qtbase5-dev;
+RUN apt-get install -y qtdeclarative5-dev;
+RUN apt-get install -y libqt5webkit5-dev;
+RUN apt-get install -y qttools5-dev-tools;
+RUN apt-get install -y qml-module-qtquick-controls;
+RUN apt-get install -y qml-module-qtquick-dialogs;
+RUN apt-get install -y libqt5opengl5-dev;
+RUN apt-get install -y qtbase5-private-dev;
+RUN apt-get install -y qtdeclarative5-dev;
+RUN apt-get install -y libqt5help5;
+RUN apt-get install -y qttools5-dev;
+RUN apt-get install -y qttools5-dev-tools;
 
 RUN rm -rf /var/lib/apt/lists/*
 
