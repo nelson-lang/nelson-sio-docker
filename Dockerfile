@@ -74,30 +74,16 @@ RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
 RUN git checkout -b v0.6.4
 
-RUN mkdir /home/nelsonuser
-
-RUN groupadd -g 999 nelsonuser && \
-    useradd -r -u 999 -g nelsonuser nelsonuser
-
-RUN chown -R nelsonuser:nelsonuser /home/nelsonuser
-
-RUN chown -R nelsonuser:nelsonuser /nelson
-
-USER nelsonuser
-
 ENV AUDIODEV null
-
+ENV PATH="/usr/lib/x86_64-linux-gnu/qt5/bin/:${PATH}"
 
 RUN cmake -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" .
 RUN cmake --build . -- -j $(nproc)
-RUN cmake --build . -- -j $(nproc) get_module_skeleton
+RUN cmake --build . -- get_module_skeleton
 
-RUN cmake --build . -- -j $(nproc) buildhelp
-RUN cmake --build . -- -j $(nproc) tests_minimal
+RUN cmake --build . -- buildhelp
+RUN cmake --build . -- tests_minimal
 
-RUN xvfb-run -a /nelson/bin/linux64/nelson-adv-cli -e "doc;exit"
+RUN xvfb-run -a /nelson/bin/linux/nelson -adv-cli -e "doc;exit"
 
-
-EXPOSE 10000:20000
-
-ENTRYPOINT ["/nelson/bin/linux64/nelson-sio-cli"]
+ENTRYPOINT ["/nelson/bin/linux/nelson-sio-cli"]
