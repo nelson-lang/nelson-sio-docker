@@ -1,67 +1,83 @@
 #==============================================================================
 # Copyright (c) 2016-present Allan CORNET (Nelson)
 #==============================================================================
-# This file is part of the Nelson.
-#=============================================================================
 # LICENCE_BLOCK_BEGIN
-# SPDX-License-Identifier: LGPL-3.0-or-later
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
 # LICENCE_BLOCK_END
 #==============================================================================
 
-FROM debian:bullseye-slim
+FROM ubuntu:22.04
 LABEL maintainer="Allan CORNET nelson.numerical.computation@gmail.com"
 
-RUN apt-get update
-RUN apt-get install -y build-essential;
-RUN apt-get install -y autotools-dev;
-RUN apt-get install -y libtool;
-RUN apt-get install -y automake;
-RUN apt-get install -y xvfb;
-RUN apt-get install -y git;
-RUN apt-get install -y libboost-all-dev;
-RUN apt-get install -y libopenmpi-dev;
-RUN apt-get install -y openmpi-bin;
-RUN apt-get install -y gettext;
-RUN apt-get install -y pkg-config;
-RUN apt-get install -y cmake;
-RUN apt-get install -y libffi-dev;
-RUN apt-get install -y libicu-dev;
-RUN apt-get install -y libxml2-dev;
-RUN apt-get install -y liblapack-dev;
-RUN apt-get install -y liblapacke-dev;
-RUN apt-get install -y fftw3;
-RUN apt-get install -y fftw3-dev;
-RUN apt-get install -y libasound-dev;
-RUN apt-get install -y portaudio19-dev;
-RUN apt-get install -y libsndfile1-dev;
-RUN apt-get install -y libtag1-dev;
-RUN apt-get install -y alsa-utils;
-RUN apt-get install -y libhdf5-dev;
-RUN apt-get install -y hdf5-tools;
-RUN apt-get install -y libmatio-dev;
-RUN apt-get install -y libslicot0;
-RUN apt-get install -y zlib1g-dev;
-RUN apt-get install -y libcurl4-openssl-dev;
-RUN apt-get install -y libgit2-dev;
-RUN apt-get install -y libeigen3-dev;
-RUN apt-get install -y qtbase5-dev;
-RUN apt-get install -y qtdeclarative5-dev;
-RUN apt-get install -y libqt5webkit5-dev;
-RUN apt-get install -y qtbase5-private-dev;
-RUN apt-get install -y qtdeclarative5-dev;
-RUN apt-get install -y qml-module-qtquick-controls;
-RUN apt-get install -y qml-module-qtquick-dialogs;
-RUN apt-get install -y qttools5-dev;
-RUN apt-get install -y qttools5-dev-tools;
-RUN apt-get install -y libqt5opengl5-dev;
-RUN apt-get install -y libqt5help5;
-
+RUN apt update;
+RUN apt -y upgrade;
+RUN apt -y install build-essential;
+RUN apt -y install git;
+RUN apt -y install cmake;
+RUN apt -y install apt-transport-https ca-certificates gnupg software-properties-common wget ;
+RUN apt -y install ninja-build;
+RUN apt -y install ninja-build;
+RUN apt -y install xvfb;
+RUN apt -y install libopenmpi-dev;
+RUN apt -y install autotools-dev;
+RUN apt -y install libtool;
+RUN apt -y install automake;
+RUN apt -y install openmpi-bin;
+RUN apt -y install gettext;
+RUN apt -y install pkg-config;
+RUN apt -y install libffi-dev;
+RUN apt -y install libicu-dev;
+RUN apt -y install libxml2-dev;
+RUN apt -y install liblapack-dev;
+RUN apt -y install liblapacke-dev;
+RUN apt -y install fftw3;
+RUN apt -y install fftw3-dev;
+RUN apt -y install libasound-dev;
+RUN apt -y install portaudio19-dev;
+RUN apt -y install libsndfile1-dev;
+RUN apt -y install libtag1-dev;
+RUN apt -y install alsa-utils;
+RUN apt -y install libslicot-dev;
+RUN apt -y install libsqlite3-dev;
+RUN apt -y install libgl-dev;
+RUN apt -y install hdf5-tools;
+RUN apt -y install zlib1g-dev;
+RUN apt -y install libcurl4-openssl-dev;
+RUN apt -y install libgit2-dev;
+RUN apt -y install libboost-all-dev;
+RUN apt -y install libeigen3-dev;
+RUN apt -y install libhdf5-dev;
+RUN apt -y install libmatio-dev;
+RUN apt -y install qt6-base-dev;
+RUN apt -y install libqt6svg6-dev;
+RUN apt -y install qt6-declarative-dev;
+RUN apt -y install qt6-documentation-tools;
+RUN apt -y install qml6-module-qtquick;
+RUN apt -y install qml6-module-qtquick-templates;
+RUN apt -y install qml6-module-qtquick-controls;
+RUN apt -y install qml6-module-qtquick-window;
+RUN apt -y install qml6-module-qtquick-dialogs;
+RUN apt -y install qml6-module-qtqml-workerscript;
+RUN apt -y install qml6-module-qtquick-layouts;
+RUN apt -y install assistant-qt6;
+RUN apt -y install qt6-tools-dev;
 
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/Nelson-numerical-software/nelson.git
+RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN cd "/nelson" && git checkout v0.6.4
+RUN git checkout -b v0.6.5
 
 RUN mkdir /home/nelsonuser
 
@@ -69,20 +85,19 @@ RUN groupadd -g 999 nelsonuser && \
     useradd -r -u 999 -g nelsonuser nelsonuser
 
 RUN chown -R nelsonuser:nelsonuser /home/nelsonuser
-
 RUN chown -R nelsonuser:nelsonuser /nelson
 
 USER nelsonuser
 
 ENV AUDIODEV null
 
-RUN cmake -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" .
+RUN cmake -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" . -DQTDIR="/usr/lib/qt6"
 RUN cmake --build . -- -j $(nproc)
-RUN cmake --build . -- get_module_skeleton
+RUN cmake --build . -- -j $(nproc) get_module_skeleton
 
-RUN cmake --build . -- buildhelp
-RUN cmake --build . -- tests_minimal
+RUN cmake --build . -- -j $(nproc) buildhelp
+RUN cmake --build . -- -j $(nproc) tests_minimal
 
-RUN xvfb-run -a /nelson/bin/linux/nelson -adv-cli -e "doc;exit"
+RUN xvfb-run -a /nelson/bin/linux/nelson-adv-cli -e "doc;exit"
 
 ENTRYPOINT ["/nelson/bin/linux/nelson-sio-cli"]
