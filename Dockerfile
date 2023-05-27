@@ -77,7 +77,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.7.4
+RUN git checkout -b v0.7.5
 
 RUN mkdir /home/nelsonuser
 
