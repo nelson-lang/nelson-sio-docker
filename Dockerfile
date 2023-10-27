@@ -20,7 +20,7 @@
 FROM ubuntu:22.04
 LABEL maintainer="Allan CORNET nelson.numerical.computation@gmail.com"
 
-RUN apt update;
+RUN apt -q update;
 RUN apt -y upgrade;
 RUN apt -y install build-essential;
 RUN apt -y install git;
@@ -77,7 +77,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
 WORKDIR "/nelson"
-RUN git checkout -b v0.7.9
+RUN git checkout -b v0.7.10
 
 RUN mkdir /home/nelsonuser
 
