@@ -28,8 +28,8 @@ docker run -ti nelson-sio-cli
 docker rmi $(docker images -q) -f
 docker system prune -a
 
-docker build -t nelsonsoftware/nelson-sio-cli:latest -t nelsonsoftware/nelson-sio-cli:v0.7.12 .
-docker push  nelsonsoftware/nelson-sio-cli:v0.7.12
+docker build -t nelsonsoftware/nelson-sio-cli:latest -t nelsonsoftware/nelson-sio-cli:v1.0.0 .
+docker push  nelsonsoftware/nelson-sio-cli:v1.0.0
 docker push  nelsonsoftware/nelson-sio-cli:latest
 
 ```
