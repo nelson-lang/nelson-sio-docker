@@ -72,6 +72,8 @@ RUN apt -y install qml6-module-qtqml-workerscript;
 RUN apt -y install qml6-module-qtquick-layouts;
 RUN apt -y install assistant-qt6;
 RUN apt -y install qt6-tools-dev;
+RUN apt-get install -y python3;
+RUN apt-get install -y python3-numpy;
 
 RUN rm -rf /var/lib/apt/lists/*
 
