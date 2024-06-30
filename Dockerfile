@@ -17,89 +17,77 @@
 # LICENCE_BLOCK_END
 #==============================================================================
 
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 LABEL maintainer="Allan CORNET nelson.numerical.computation@gmail.com"
+
+ENV NELSON_VERSION 1.6.0.4208
 
 RUN apt -q update;
 RUN apt -y upgrade;
-RUN apt -y install build-essential;
-RUN apt -y install git;
-RUN apt -y install cmake;
-RUN apt -y install apt-transport-https ca-certificates gnupg software-properties-common wget ;
-RUN apt -y install ninja-build;
-RUN apt -y install ninja-build;
-RUN apt -y install xvfb;
-RUN apt -y install libopenmpi-dev;
-RUN apt -y install autotools-dev;
-RUN apt -y install libtool;
-RUN apt -y install automake;
-RUN apt -y install openmpi-bin;
-RUN apt -y install gettext;
-RUN apt -y install pkg-config;
-RUN apt -y install libffi-dev;
-RUN apt -y install libicu-dev;
-RUN apt -y install libxml2-dev;
-RUN apt -y install liblapack-dev;
-RUN apt -y install liblapacke-dev;
-RUN apt -y install fftw3;
-RUN apt -y install fftw3-dev;
-RUN apt -y install libasound-dev;
-RUN apt -y install portaudio19-dev;
-RUN apt -y install libsndfile1-dev;
-RUN apt -y install libtag1-dev;
-RUN apt -y install alsa-utils;
-RUN apt -y install libslicot-dev;
-RUN apt -y install libsqlite3-dev;
-RUN apt -y install libgl-dev;
-RUN apt -y install hdf5-tools;
-RUN apt -y install zlib1g-dev;
-RUN apt -y install libcurl4-openssl-dev;
-RUN apt -y install libgit2-dev;
-RUN apt -y install libboost-all-dev;
-RUN apt -y install libeigen3-dev;
-RUN apt -y install libhdf5-dev;
-RUN apt -y install libmatio-dev;
-RUN apt -y install qt6-base-dev;
-RUN apt -y install libqt6svg6-dev;
-RUN apt -y install qt6-declarative-dev;
-RUN apt -y install qt6-documentation-tools;
-RUN apt -y install qml6-module-qtquick;
-RUN apt -y install qml6-module-qtquick-templates;
-RUN apt -y install qml6-module-qtquick-controls;
-RUN apt -y install qml6-module-qtquick-window;
-RUN apt -y install qml6-module-qtquick-dialogs;
-RUN apt -y install qml6-module-qtqml-workerscript;
-RUN apt -y install qml6-module-qtquick-layouts;
-RUN apt -y install assistant-qt6;
-RUN apt -y install qt6-tools-dev;
+
+RUN apt-get install -y apt-transport-https ca-certificates gnupg software-properties-common wget ;
+RUN apt-get install -y build-essential;
+RUN apt-get install -y cmake;
+RUN apt-get install -y libfftw3-single3;
+RUN apt-get install -y libfftw3-double3;
+RUN apt-get install -y libslicot0;
+RUN apt-get install -y libopenblas0;
+RUN apt-get install -y hdf5-tools;
+RUN apt-get install -y libasound2t64;
+RUN apt-get install -y libboost-chrono1.83.0;
+RUN apt-get install -y libboost-filesystem1.83.0;
+RUN apt-get install -y libboost-iostreams1.83.0;
+RUN apt-get install -y libboost-locale1.83.0;
+RUN apt-get install -y libboost-serialization1.83.0;
+RUN apt-get install -y libboost-thread1.83.0;
+RUN apt-get install -y libgit2-1.7;
+RUN apt-get install -y libhdf5-103-1t64;
+RUN apt-get install -y libjack-jackd2-0;
+RUN apt-get install -y liblapacke;
+RUN apt-get install -y libmatio11;
+RUN apt-get install -y libopenblas0;
+RUN apt-get install -y libopenmpi3t64;
+RUN apt-get install -y libportaudio2;
+RUN apt-get install -y libqt6core6;
+RUN apt-get install -y libqt6gui6;
+RUN apt-get install -y libqt6help6;
+RUN apt-get install -y libqt6printsupport6;
+RUN apt-get install -y libqt6qml6;
+RUN apt-get install -y libqt6quick6;
+RUN apt-get install -y libqt6svg6;
+RUN apt-get install -y libqt6widgets6;
+RUN apt-get install -y libsndfile1;
+RUN apt-get install -y libtag1v5;
+RUN apt-get install -y qt6-declarative-dev;
+RUN apt-get install -y qt6-documentation-tools;
+RUN apt-get install -y qml6-module-qtquick;
+RUN apt-get install -y qml6-module-qtquick-templates;
+RUN apt-get install -y qml6-module-qtquick-controls;
+RUN apt-get install -y qml6-module-qtquick-window;
+RUN apt-get install -y qml6-module-qtquick-dialogs;
+RUN apt-get install -y qml6-module-qtqml-workerscript;   
+RUN apt-get install -y qml6-module-qtquick-layouts;
+RUN apt-get install -y libtbb12;
 RUN apt-get install -y python3;
 RUN apt-get install -y python3-numpy;
 
+
+RUN wget https://github.com/nelson-lang/nelson/releases/download/v1.6.0/nelson-Ubuntu-24.04-v${NELSON_VERSION}.deb
+
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/Nelson-numerical-software/nelson.git /nelson
+RUN apt install -y ./nelson-Ubuntu-24.04-v${NELSON_VERSION}.deb 
 WORKDIR "/nelson"
-RUN git checkout -b v1.5.0
 
 RUN mkdir /home/nelsonuser
 
-RUN groupadd -g 999 nelsonuser && \
-    useradd -r -u 999 -g nelsonuser nelsonuser
-
+RUN useradd -m nelsonuser
 RUN chown -R nelsonuser:nelsonuser /home/nelsonuser
 RUN chown -R nelsonuser:nelsonuser /nelson
 
 USER nelsonuser
 
+WORKDIR /home/nelsonuser
+
 ENV AUDIODEV null
-
-RUN cmake -DCMAKE_BUILD_TYPE=Release -G "Unix Makefiles" . -DQTDIR="/usr/lib/qt6"
-RUN cmake --build . -- -j $(nproc)
-RUN cmake --build . -- -j $(nproc) get_module_skeleton
-
-RUN cmake --build . -- -j $(nproc) buildhelp
-RUN cmake --build . -- -j $(nproc) tests_minimal
-
-RUN xvfb-run -a /nelson/bin/linux/nelson-adv-cli -e "doc;exit"
-
-ENTRYPOINT ["/nelson/bin/linux/nelson-sio-cli"]
+ENTRYPOINT ["nelson-sio-cli"]
