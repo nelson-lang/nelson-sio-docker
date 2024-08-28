@@ -20,7 +20,7 @@
 FROM ubuntu:24.04
 LABEL maintainer="Allan CORNET nelson.numerical.computation@gmail.com"
 
-ENV NELSON_VERSION 1.6.0.4208
+ENV NELSON_VERSION 1.7.0.4255
 
 RUN apt -q update;
 RUN apt -y upgrade;
@@ -72,7 +72,7 @@ RUN apt-get install -y python3;
 RUN apt-get install -y python3-numpy;
 
 
-RUN wget https://github.com/nelson-lang/nelson/releases/download/v1.6.0/nelson-Ubuntu-24.04-v${NELSON_VERSION}.deb
+RUN wget https://github.com/nelson-lang/nelson/releases/download/v1.7.0/nelson-Ubuntu-24.04-v${NELSON_VERSION}.deb
 
 RUN rm -rf /var/lib/apt/lists/*
 
