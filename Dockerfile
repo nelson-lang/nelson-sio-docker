@@ -20,7 +20,8 @@
 FROM ubuntu:24.04
 LABEL maintainer="Allan CORNET nelson.numerical.computation@gmail.com"
 
-ENV NELSON_VERSION 1.7.0.4255
+ARG NELSON_VERSION=1.8.0
+ARG NELSON_VERSION_TAG=4314
 
 RUN apt -q update;
 RUN apt -y upgrade;
@@ -71,12 +72,12 @@ RUN apt-get install -y libtbb12;
 RUN apt-get install -y python3;
 RUN apt-get install -y python3-numpy;
 
-
-RUN wget https://github.com/nelson-lang/nelson/releases/download/v1.7.0/nelson-Ubuntu-24.04-v${NELSON_VERSION}.deb
+RUN wget https://github.com/nelson-lang/nelson/releases/download/v${NELSON_VERSION}/nelson-Ubuntu-24.04-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb && \
+    apt install -y ./nelson-Ubuntu-24.04-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb && \
+    rm nelson-Ubuntu-24.04-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb
 
 RUN rm -rf /var/lib/apt/lists/*
 
-RUN apt install -y ./nelson-Ubuntu-24.04-v${NELSON_VERSION}.deb 
 WORKDIR "/nelson"
 
 RUN mkdir /home/nelsonuser

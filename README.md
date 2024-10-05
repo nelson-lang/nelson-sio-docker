@@ -1,4 +1,4 @@
-# nelson-sio-docker
+# nelson-docker
 
 Docker official image for Nelson socket.IO client.
 
@@ -28,8 +28,12 @@ docker run -ti nelson-sio-cli
 docker rmi $(docker images -q) -f
 docker system prune -a
 
-export NELSON_VERSION=1.7.0
-docker build -t nelsonsoftware/nelson-sio-cli:latest -t nelsonsoftware/nelson-sio-cli:v$NELSON_VERSION .
+
+export NELSON_VERSION=1.8.0
+export NELSON_VERSION_TAG=4314
+
+docker build --build-arg NELSON_VERSION=$NELSON_VERSION --build-arg NELSON_VERSION_TAG=$NELSON_VERSION_TAG -t nelsonsoftware/nelson-sio-cli:latest -t nelsonsoftware/nelson-sio-cli:v$NELSON_VERSION .
+
 docker push  nelsonsoftware/nelson-sio-cli:v$NELSON_VERSION
 docker push  nelsonsoftware/nelson-sio-cli:latest
 
