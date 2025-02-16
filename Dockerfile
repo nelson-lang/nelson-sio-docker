@@ -72,9 +72,9 @@ RUN apt-get install -y libtbb12;
 RUN apt-get install -y python3;
 RUN apt-get install -y python3-numpy;
 
-RUN wget https://github.com/nelson-lang/nelson/releases/download/v${NELSON_VERSION}/nelson-Ubuntu-24.04-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb && \
-    apt install -y ./nelson-Ubuntu-24.04-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb && \
-    rm nelson-Ubuntu-24.04-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb
+RUN wget https://github.com/nelson-lang/nelson/releases/download/v${NELSON_VERSION}/nelson-Ubuntu-24.04-x86_64-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb && \
+    apt install -y ./nelson-Ubuntu-24.04-x86_64-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb && \
+    rm nelson-Ubuntu-24.04-x86_64-v${NELSON_VERSION}.${NELSON_VERSION_TAG}.deb
 
 RUN rm -rf /var/lib/apt/lists/*
 
